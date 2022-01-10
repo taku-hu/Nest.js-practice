@@ -6,27 +6,27 @@ import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
   @Get()
-  findAll() {
-    return this.itemsService.findAll()
+  async findAll() {
+    return await this.itemsService.findAll()
   }
 
   @Get(':id')
-  findById(@Param('id', ParseUUIDPipe) id: string) {
-    return this.itemsService.findById(id)
+  async findById(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.itemsService.findById(id)
   }
 
   @Post()
-  create(@Body() createItemDto: CreateItemDto) {
-    return this.itemsService.create(createItemDto)
+  async create(@Body() createItemDto: CreateItemDto) {
+    return await this.itemsService.create(createItemDto)
   }
 
   @Patch(':id')
-  updateStatus(@Param('id', ParseUUIDPipe) id: string) {
-    return this.itemsService.updateStatus(id)
+  async updateStatus(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.itemsService.updateStatus(id)
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseUUIDPipe) id: string) {
-    return this.itemsService.delete(id)
+  async delete(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.itemsService.delete(id)
   }
 }
