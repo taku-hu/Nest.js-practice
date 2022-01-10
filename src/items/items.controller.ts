@@ -1,6 +1,6 @@
-import { ItemsStatus } from '@/items/item-status.enum'
+import { CreateItemDto } from '@/items/dto/create-item.dto'
 import { ItemsService } from '@/items/items.service'
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common'
 
 @Controller('items')
 export class ItemsController {
@@ -11,34 +11,22 @@ export class ItemsController {
   }
 
   @Get(':id')
-  findById(@Param('id') id: string) {
+  findById(@Param('id', ParseUUIDPipe) id: string) {
     return this.itemsService.findById(id)
   }
 
   @Post()
-  create(
-    @Body('id') id: string,
-    @Body('name') name: string,
-    @Body('price') price: number,
-    @Body('description') description: string
-  ) {
-    const item = {
-      id,
-      name,
-      price,
-      description,
-      status: ItemsStatus.ON_SALE
-    }
-    return this.itemsService.create(item)
+  create(@Body() createItemDto: CreateItemDto) {
+    return this.itemsService.create(createItemDto)
   }
 
   @Patch(':id')
-  updateStatus(@Param('id') id: string) {
+  updateStatus(@Param('id', ParseUUIDPipe) id: string) {
     return this.itemsService.updateStatus(id)
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.itemsService.delete(id)
   }
 }
